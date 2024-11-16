@@ -1,10 +1,11 @@
 import React from 'react';
 import {source} from '../App.js'
+import classes from './Header.module.css';
 
 const Header = () => {
     return (
-        <header className="header">
-            <img className="images1" src={source} alt="image"/>
+        <header className={classes.header}>
+            <img src={source} alt="image"/>
         </header>
     )
 }
