@@ -1,0 +1,24 @@
+.nav {
+    grid-area: n;
+    background-color: burlywood;
+}
+
+.nav div{
+    background-color: cornflowerblue;
+}
+
+.item {
+    color: blue;
+}
+
+.nav a:hover {
+    color: white;
+}
+
+.nav a:active {
+    color: burlywood;
+}
+
+ul li {
+    list-style-type: georgian;
+}

@@ -1,0 +1,12 @@
+.content {
+    width: 1000px;
+    height: 500px;
+    grid-area: c;
+    background-color: cornflowerblue;
+}
+
+.content img {
+    width: 200px;
+    height: 140px;
+    margin: 10px;
+}
