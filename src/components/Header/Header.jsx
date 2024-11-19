@@ -1,6 +1,7 @@
 import React from 'react';
-import {source} from '../App.js'
+
 import classes from './Header.module.css';
+import {source} from "../../App";
 
 const Header = () => {
     return (

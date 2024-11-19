@@ -1,0 +1,11 @@
+.content img {
+    width: 80px;
+    height: 80px;
+    margin: 0px;
+    border-radius: 30px;
+}
+
+.item {
+    color: greenyellow;
+
+}

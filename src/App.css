@@ -1,24 +1,10 @@
-ul li {
-    list-style-type: georgian;
-}
-
-.header img {
-    width: 50px;
-    margin: 5px;
-}
-
-.images {
-    width: 200px;
-    height: 140px;
-    margin: 10px;
-}
-
 .app-wrapper {
     display: grid;
     margin: auto;
-    width: 1200px;
+    width: 1400px;
+    height: 960px;
     grid-template-areas:
-  "h h"
+  "h c"
   "n c";
 
     grid-template-rows: 60px 1fr;
@@ -26,36 +12,3 @@ ul li {
     grid-gap: 10px;
 }
 
-.nav {
-    grid-area: n;
-    background-color: burlywood;
-}
-
-.header {
-    grid-area: h;
-    background-color: green;
-}
-
-
-.content {
-    width: 1000px;
-    height: 500px;
-    grid-area: c;
-    background-color: cornflowerblue;
-}
-
-.nav div{
-    background-color: cornflowerblue;
-}
-
-.nav a:visited {
-    color: blue;
-}
-
-.nav a:hover {
-    color: white;
-}
-
-.nav a:active {
-    color: darkmagenta;
-}

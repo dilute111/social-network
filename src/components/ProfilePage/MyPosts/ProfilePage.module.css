@@ -1,16 +1,17 @@
 .content {
-    width: 1000px;
-    height: 500px;
+    width: 1200px;
+    height: 960px;
     grid-area: c;
     background-color: cornflowerblue;
 }
 
 .content img {
-    width: 200px;
-    height: 140px;
+    width: 1180px;
+    height: 200px;
     margin: 10px;
 }
 
 .item {
-    color: greenyellow;
+    color: blue;
 }
+

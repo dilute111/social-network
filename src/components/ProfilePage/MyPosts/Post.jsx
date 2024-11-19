@@ -1,29 +1,19 @@
 import React from 'react';
-import classes from "../ProfilePage.module.css";
+import classes from "./Post.module.css";
 
-const MyPosts = () => {
+const Post = (props) => {
     return (
-        <div className={classes.item}>
-            My posts
+
             <div className={classes.item}>
-                New Post
-            </div>
-            <div className={classes.item}>
-                <div>
-                    post 1
+                <div className={classes.content}>
+                    <img  src={props.image} alt="" />
+                    <span>{ props.message } </span>
+                    <div>
+                    Likes { props.likes }
+                    </div>
                 </div>
-                <div className={classes.item}>
-                    post 2
-                </div>
-                <div className={classes.item}>
-                    post 3
-                </div>
-                <div className={classes.item}>
-                    post 4
-                </div>
-            </div>
         </div>
     );
 };
 
-export default MyPosts;
+export default Post;
