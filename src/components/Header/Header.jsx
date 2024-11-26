@@ -5,9 +5,11 @@ import {source} from "../../App";
 
 const Header = () => {
     return (
-        <header className={classes.header}>
+        <a href="/">
+            <header className={classes.header}>
             <img src={source} alt="image"/>
         </header>
+        </a>
     )
 }
 
