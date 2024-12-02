@@ -11,3 +11,8 @@
 .dialogsItems .active {
     color: gold;
 }
+
+.avatars img {
+    width: 60px;
+    height: 50px;
+}

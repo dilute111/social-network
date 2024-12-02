@@ -10,6 +10,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
+import FriendsPage from "./components/FriendsPage/FriendsPage";
 
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
@@ -21,14 +22,15 @@ const App = (props) => {
         <BrowserRouter>
         <div className="app-wrapper">
             <Header/>
-            <Navbar/>
+            <Navbar d={props.state.messagesPage.d}/>
             <div className="app-wrapper-content">
                 <Routes >
-                <Route path="/profile" element={<ProfilePage p={props.p} />} />
-                <Route path="/messages" element={<Dialogs d={props.d} m={props.m} />} />
+                <Route path="/profile" element={<ProfilePage p={props.state.profilePage.p} addPost={props.addPost} />} />
+                <Route path="/messages" element={<Dialogs d={props.state.messagesPage.d} m={props.state.messagesPage.m} />} />
                 <Route path="/news" element={<News/>} />
                 <Route path="/music" element={<Music />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/friends" element={<FriendsPage />} />
                 </Routes>
             </div>
         </div>

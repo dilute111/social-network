@@ -24,3 +24,14 @@
 ul li {
     list-style-type: georgian;
 }
+
+.friends {
+    display: flex;
+}
+
+.rest {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: purple;
+}
