@@ -11,6 +11,7 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import FriendsPage from "./components/FriendsPage/FriendsPage";
+import DialogItem from "./components/Dialogs/DialogItem/DialogItem";
 
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
@@ -19,22 +20,24 @@ export const avatar = "https://i.pinimg.com/736x/fc/a2/21/fca2210d4ccac0da3119da
 
 const App = (props) => {
     return (
-        <BrowserRouter>
+
         <div className="app-wrapper">
             <Header/>
             <Navbar d={props.state.messagesPage.d}/>
             <div className="app-wrapper-content">
-                <Routes >
-                <Route path="/profile" element={<ProfilePage p={props.state.profilePage.p} addPost={props.addPost} />} />
-                <Route path="/messages" element={<Dialogs d={props.state.messagesPage.d} m={props.state.messagesPage.m} />} />
-                <Route path="/news" element={<News/>} />
-                <Route path="/music" element={<Music />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/friends" element={<FriendsPage />} />
+                <Routes>
+                    <Route path="/profile" element={<ProfilePage state={props.state}
+                                                                 dispatch={props.dispatch}/>}/>
+                    <Route path="/messages" element={<Dialogs store={props.store} />}/>
+                    <Route path="/messages/1" element={<Dialogs store={props.store}/>}/>
+                    <Route path="/news" element={<News/>}/>
+                    <Route path="/music" element={<Music/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
+                    <Route path="/friends" element={<FriendsPage/>}/>
                 </Routes>
             </div>
         </div>
-        </BrowserRouter>
+
     );
 }
 
