@@ -2,7 +2,8 @@ import React from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post";
 import {avatar} from "../../../App";
-import {addPostActionCreator, updateNewPostActionCreator} from "../../../redux/state";
+import {addPostActionCreator, updateNewPostActionCreator} from "../../../redux/profile-reducer";
+
 
 
 
