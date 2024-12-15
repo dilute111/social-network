@@ -2,7 +2,7 @@ import profileReducer from "./profile-reducer";
 import messagesReducer from "./messages-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-let avatarsData = {
+export let avatarsData = {
     Dimych: "https://i.pinimg.com/736x/c7/2b/9e/c72b9eee2ca6974a1c8dd861aef6e9df.jpg",
     Andrey: "https://i1.sndcdn.com/artworks-2nRzQYhwpFs6RqGq-HrJK1Q-t500x500.jpg",
     Sveta: "https://avatars.mds.yandex.net/i?id=195618a07e0fd6057af3a86cc32d5ca3_sr-4580368-images-thumbs&n=13",

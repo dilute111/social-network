@@ -3,7 +3,7 @@ import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom/client";
 import React from "react";
 import App from "./App";
-import store from "./redux/state";
+import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
 
 let rerenderEntireTree = (props) => {
@@ -19,7 +19,11 @@ let rerenderEntireTree = (props) => {
 
 rerenderEntireTree(store.getState()) // вызов функции отрисовывающей страницу
 
-store.subscribe(rerenderEntireTree); // передача функции, чтобы можно было вызывать перерисовку извне
+store.subscribe(() => {
+    let state = store.getState()
+
+    rerenderEntireTree(state)
+}); // передача функции, чтобы можно было вызывать перерисовку извне
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
