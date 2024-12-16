@@ -1,6 +1,7 @@
 .item {
     color: blue;
     padding: 10px;
+    background-color: cornflowerblue;
 }
 
 .textBlock {
@@ -9,4 +10,5 @@
 
 .posts {
     margin-top: 10px;
+    background-color: cornflowerblue;
 }

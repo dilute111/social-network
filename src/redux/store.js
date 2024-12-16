@@ -12,7 +12,7 @@ export let avatarsData = {
 }
 
 let store = {
-        _state: {
+    _state: {
         profilePage: {
             p: [
                 {id: 1, message: "Hello, this is my first post", likesCount: 12},
@@ -42,27 +42,27 @@ let store = {
             ],
             newMessageBody: ""
         },
-        sidebar: { }
+        sidebar: {}
     },
-        _callSubscriber() { // функция, которой присваивается ререндер, для дальнейшего взаимодействия
+    _callSubscriber() { // функция, которой присваивается ререндер, для дальнейшего взаимодействия
         console.log("state changed")
     },
 
-        getState() {
-          return this._state
-        },
-        subscribe(observer) { // получить и присвоить пустышке callSubscriber полученную функцию ререндер
+    getState() {
+        return this._state
+    },
+    subscribe(observer) { // получить и присвоить пустышке callSubscriber полученную функцию ререндер
         this._callSubscriber = observer
     },
 
-        dispatch(action) { // { type: 'ADD-POST' }
+    dispatch(action) { // { type: 'ADD-POST' }
 
-            this._state.profilePage = profileReducer(this._state.profilePage, action)
-            this._state.messagesPage = messagesReducer(this._state.messagesPage, action)
-            this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagesPage = messagesReducer(this._state.messagesPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
-            this._callSubscriber(this._state)
-        }
+        this._callSubscriber(this._state)
+    }
 }
 
 
