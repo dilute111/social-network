@@ -22,13 +22,12 @@ const App = (props) => {
 
         <div className="app-wrapper">
             <Header/>
-            <Navbar d={props.state.messagesPage.d}/>
+            <Navbar />
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/profile" element={<ProfilePage store={props.store}
-                                                                 />}/>
-                    <Route path="/messages" element={<DialogsContainer store={props.store} />}/>
-                    <Route path="/messages/1" element={<DialogsContainer store={props.store}/>}/>
+                    <Route path="/profile" element={<ProfilePage />}/>
+                    <Route path="/messages" element={<DialogsContainer  />}/>
+                    <Route path="/messages/1" element={<DialogsContainer />}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>

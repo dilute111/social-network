@@ -9,7 +9,7 @@ import {avatar} from "../../../App";
 const MyPosts = (props) => {
 
     let postsData =
-        props.state.profilePage.p.map(e => <Post image={avatar} message={e.message} likes={e.likesCount}/>)
+        props.posts.map(e => <Post image={avatar} message={e.message} likes={e.likesCount}/>)
 
     let newPostElement = React.createRef()
 
@@ -27,7 +27,7 @@ const MyPosts = (props) => {
             <h3>My posts</h3>
             <div >
                 <div>
-                <textarea onChange={onPostChange} ref={newPostElement} value={props.state.profilePage.newPostText} />
+                <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText} />
                 </div>
                 <div>
                 <button onClick={onAddPost}>add post</button>
