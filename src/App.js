@@ -11,6 +11,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import FriendsPage from "./components/FriendsPage/FriendsPage";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
@@ -27,7 +28,7 @@ const App = (props) => {
                 <Routes>
                     <Route path="/profile" element={<ProfilePage />}/>
                     <Route path="/messages" element={<DialogsContainer  />}/>
-                    <Route path="/messages/1" element={<DialogsContainer />}/>
+                    <Route path="/users/1" element={<UsersContainer />}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
