@@ -1,40 +1,24 @@
 import React from 'react';
 import classes from "./Users.module.css";
+import axios from "axios";
+import userPhoto from "../../assets/images/user.png"
 
 const Users = (props) => {
     let a = "https://avatars.yandex.net/get-music-content/9838169/7e19a440.a.26720548-1/400x400"
     if (props.users.length === 0) {
-        props.setUsers([
-                {
-                    id: 1, fullName: "Dmitry", location: {city: "Minsk", country: "Belarus"}, status: "i am a boss",
-                    followed: false, photoUrl: a
-                },
-                {
-                    id: 2, fullName: "Sasha", location: {city: "Vologda", country: "Russia"}, status: "i am a boss too",
-                    followed: true, photoUrl: a
-                },
-                {
-                    id: 3,
-                    fullName: "Andrew",
-                    location: {city: "Yekaterinburg", country: "Russia"},
-                    status: "i am a boss too",
-                    followed: false,
-                    photoUrl: a
-                },
-                {
-                    id: 4, fullName: "Sveta", location: {city: "Rezh", country: "Russia"}, status: "i'm pretty",
-                    followed: false, photoUrl: a
-                },
-                {
-                    id: 5,
-                    fullName: "Valera",
-                    location: {city: "Podzalupinsk", country: "Russia"},
-                    status: "i like football!!",
-                    followed: true,
-                    photoUrl: a
-                },
-            ]
-        )
+        fetch("https://social-network.samuraijs.com/api/1.0/users")
+            .then((res) => {
+                if(!res.ok) {
+                    throw new Error("Failed to fetch posts");
+                }
+                return res.json()
+            })
+            .then((data) => {
+                props.setUsers(data.items)
+            })
+            .catch((err) => {
+                console.error("Failed to fetch posts", err);
+            })
     }
 
     return <div className={classes.users}>
@@ -42,7 +26,7 @@ const Users = (props) => {
             props.users.map( u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photoUrl} alt=""/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} alt=""/>
                     </div>
                     <div>
                         {u.followed ?
@@ -52,11 +36,11 @@ const Users = (props) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.fullName}</div><div>{u.status}</div>
+                        <div>{u.name}</div><div>{u.status}</div>
                     </span>
                     <span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.city"}</div>
 
                     </span>
                 </span>
