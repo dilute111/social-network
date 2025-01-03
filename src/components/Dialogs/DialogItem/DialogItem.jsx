@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 const DialogItem = (props) => {
     return (
         <div className={`${classes.dialog} ${classes.avatars}`}>
-            <NavLink to={`/users/${props.id}`}> <img src={props.ava} alt="logo"/> {props.name}</NavLink>
+             <img src={props.ava} alt="logo"/> {props.name}
         </div>
     );
 };
