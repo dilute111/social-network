@@ -12,6 +12,7 @@ import Settings from "./components/Settings/Settings";
 import FriendsPage from "./components/FriendsPage/FriendsPage";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer";
 
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
@@ -23,12 +24,12 @@ const App = (props) => {
 
         <div className="app-wrapper">
             <Header/>
-            <Navbar />
+            <Navbar/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/profile" element={<ProfilePage />}/>
-                    <Route path="/messages" element={<DialogsContainer  />}/>
-                    <Route path="/users" element={<UsersContainer />}/>
+                    <Route path="/profile/:userId?" element={<ProfilePageContainer/>}/>
+                    <Route path="/messages/*" element={<DialogsContainer/>}/>
+                    <Route path="/users" element={<UsersContainer/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
