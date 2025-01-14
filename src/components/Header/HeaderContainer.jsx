@@ -12,7 +12,7 @@ class HeaderContainer extends React.Component {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json(); // Распарсим JSON
+                return response.json()
             })
             .then((data) => {
                 if (data.resultCode === 0) {

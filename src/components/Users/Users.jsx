@@ -34,10 +34,69 @@ const Users = (props) => {
                     <div>
                         {u.followed ?
                             <button onClick={() => {
-                                props.unfollow(u.id)
+
+                                fetch(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                    method: "DELETE",
+                                    credentials: "include",
+                                    headers: {
+
+                                        'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                                    },
+                                })
+                                    .then((res) => {
+
+                                        if (!res.ok) {
+                                            throw new Error(`HTTP error! status: ${res.status}`);
+                                        }
+                                        return res.json();
+                                    })
+                                    .then((data) => {
+
+                                        if(data.resultCode == 0 ){
+
+                                            props.unfollow(u.id)
+                                        } else {
+                                            console.error('Error following user:', data.messages);
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.error('Fetch error:', error);
+                                    });
+
+
+
                             }}>Unfollow</button> :
                             <button onClick={() => {
-                                props.follow(u.id)
+
+                                fetch(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                    method: "POST",
+                                    credentials: "include",
+                                    headers: {
+
+                                        'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                                    },
+                                })
+                                    .then((res) => {
+
+                                        if (!res.ok) {
+                                            throw new Error(`HTTP error! status: ${res.status}`);
+                                        }
+                                        return res.json();
+                                    })
+                                    .then((data) => {
+
+                                        if(data.resultCode == 0 ){
+
+                                            props.follow(u.id)
+                                        } else {
+                                            console.error('Error following user:', data.messages);
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.error('Fetch error:', error);
+                                    });
+
+
                             }}>Follow</button>}
                     </div>
                 </span>

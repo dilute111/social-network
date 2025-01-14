@@ -15,7 +15,9 @@ class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        fetch(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        fetch(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            credentials: "include",
+        })
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch posts");
@@ -34,7 +36,9 @@ class UsersContainer extends React.Component {
 
     onPageChange = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
-        fetch(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        fetch(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+            credentials: "include",
+        })
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch posts");
