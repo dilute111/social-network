@@ -3,6 +3,7 @@ import classes from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from "react-router-dom";
 
+
 const Users = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
@@ -33,69 +34,14 @@ const Users = (props) => {
                     </div>
                     <div>
                         {u.followed ?
-                            <button onClick={() => {
+                            <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
 
-                                fetch(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                    method: "DELETE",
-                                    credentials: "include",
-                                    headers: {
-
-                                        'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
-                                    },
-                                })
-                                    .then((res) => {
-
-                                        if (!res.ok) {
-                                            throw new Error(`HTTP error! status: ${res.status}`);
-                                        }
-                                        return res.json();
-                                    })
-                                    .then((data) => {
-
-                                        if(data.resultCode == 0 ){
-
-                                            props.unfollow(u.id)
-                                        } else {
-                                            console.error('Error following user:', data.messages);
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.error('Fetch error:', error);
-                                    });
-
-
+                                props.unfollow(u.id)
 
                             }}>Unfollow</button> :
-                            <button onClick={() => {
+                            <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
 
-                                fetch(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                    method: "POST",
-                                    credentials: "include",
-                                    headers: {
-
-                                        'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
-                                    },
-                                })
-                                    .then((res) => {
-
-                                        if (!res.ok) {
-                                            throw new Error(`HTTP error! status: ${res.status}`);
-                                        }
-                                        return res.json();
-                                    })
-                                    .then((data) => {
-
-                                        if(data.resultCode == 0 ){
-
-                                            props.follow(u.id)
-                                        } else {
-                                            console.error('Error following user:', data.messages);
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.error('Fetch error:', error);
-                                    });
-
+                                props.follow(u.id)
 
                             }}>Follow</button>}
                     </div>
