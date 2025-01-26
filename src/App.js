@@ -10,6 +10,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
@@ -27,6 +28,7 @@ const App = (props) => {
                     <Route path="/profile/:userId?" element={<ProfilePageContainer/>}/>
                     <Route path="/messages/*" element={<DialogsContainer/>}/>
                     <Route path="/users" element={<UsersContainer/>}/>
+                    <Route path="/login" element={<Login/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>

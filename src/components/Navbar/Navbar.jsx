@@ -2,8 +2,6 @@ import React from 'react';
 import classes from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import Friends from "./Friends/Friends";
-
-import {Provider} from "react-redux";
 import store from "../../redux/redux-store";
 
 
@@ -12,20 +10,20 @@ const Navbar = (props) => {
         store.getState().messagesPage.d.slice(0, 3).map(e => <Friends id={e.id} name={e.name}
                                                                       ava={e.ava}/>)
     return (
-                     <nav className={classes.nav}>
-                        <div className={classes.item}><NavLink to="/profile">Profile</NavLink></div>
-                        <div className={classes.item}><NavLink to="/messages">Messages</NavLink></div>
-                        <div className={classes.item}><NavLink to="/users">Users</NavLink></div>
-                        <div className={classes.item}><NavLink to="/news">News</NavLink></div>
-                        <div className={classes.item}><NavLink to="/music">Music</NavLink></div>
-                        <div className={classes.item}><NavLink to="/settings">Settings</NavLink></div>
-                        <div className={classes.item}><NavLink to="/friends">Friends
-                            <div className={classes.friends}>{friendsElement}
-                                <span
-                                    className={classes.rest}>and {(store.getState().messagesPage.d.length - 3)} more</span>
-                            </div>
-                        </NavLink></div>
-                    </nav>
+             <nav className={classes.nav}>
+               <NavLink to="/profile"> <div className={classes.item}>Profile</div></NavLink>
+               <NavLink to="/messages"> <div className={classes.item}>Messages</div> </NavLink>
+               <NavLink to="/users"> <div className={classes.item}>Users</div> </NavLink>
+               <NavLink to="/news"> <div className={classes.item}>News</div> </NavLink>
+               <NavLink to="/music"> <div className={classes.item}>Music</div> </NavLink>
+               <NavLink to="/settings"> <div className={classes.item}>Settings</div> </NavLink>
+               <NavLink to="/friends"> <div className={classes.item}>Friends </div>
+                    <div className={classes.friends}>{friendsElement}
+                        <span
+                            className={classes.rest}>and {(store.getState().messagesPage.d.length - 3)} more</span>
+                    </div>
+                </NavLink>
+             </nav>
 
 
     )

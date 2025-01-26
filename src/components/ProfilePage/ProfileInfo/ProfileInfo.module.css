@@ -3,7 +3,27 @@
 }
 
 .descriptionBlock img {
-    height: 250px;
-    width: 250px;
-    margin: auto;
+    position: absolute;
+    top: 50px;
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+}
+
+.coverImg {
+    width: 100%; /* Занимает всю ширину */
+    height: 225px; /* Высота, подходящая для обложки */
+    object-fit: cover; /* Избегаем искажений изображения */
+    border-radius: 30px; /* Скругление нижних углов для плавности */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+}
+
+.profileStatus {
+    width: 100%;
+    margin-top: 30px;
 }

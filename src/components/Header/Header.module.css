@@ -2,6 +2,7 @@
     grid-area: h;
     background-color: green;
     width: 100%;
+    border-radius: 5px
 }
 
 .header img {

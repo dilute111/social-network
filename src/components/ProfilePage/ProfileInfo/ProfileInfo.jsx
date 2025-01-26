@@ -3,6 +3,7 @@ import {beachImg} from "../../../App";
 import classes from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png"
+import ProfileStatus from "../../ProfileStatus/ProfileStatus";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -11,9 +12,9 @@ const ProfileInfo = (props) => {
     
 
     return (
-        <div>
+        <>
             <div>
-                <img src={beachImg} alt="logo"/>
+                <img className={classes.coverImg} src={beachImg} alt="logo"/>
             </div>
             <div className={classes.descriptionBlock}>
                 {props.profile && props.profile.photos? (
@@ -21,9 +22,12 @@ const ProfileInfo = (props) => {
                     ) : (
                         <Preloader />
                 )}
-                ava + description
+                <div className={classes.profileStatus}>
+                <ProfileStatus status="Hello, my friends" />
+                </div>
+
             </div>
-        </div>
+        </>
     )
         ;
 };
