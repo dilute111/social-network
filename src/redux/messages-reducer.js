@@ -1,6 +1,5 @@
 import {avatarsData} from "./store";
 
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
 
 let initialState = {
@@ -19,32 +18,25 @@ let initialState = {
         {id: 4, message: "Yo"},
         {id: 5, message: "Yo"}
     ],
-    newMessageBody: ""
+
 }
 
 const messagesReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
+
         case SEND_MESSAGE:
-            let body = state.newMessageBody
+            let body = action.body
             return {
                 ...state,
-                newMessageBody: "",
-                m: [...state.m, {id: 6, message: body}]
+                m: [...state.m, { id: state.m.length + 1, message: body }]
             }
         default:
             return state
     }
 }
 
-export const updateNewMessageBodyCreator = (body) => ({
-    type: UPDATE_NEW_MESSAGE_BODY, body: body
-})
-export const sendMessageCreator = () => ({type: SEND_MESSAGE})
+
+export const sendMessageCreator = (body) => ({type: SEND_MESSAGE, body})
 
 export default messagesReducer

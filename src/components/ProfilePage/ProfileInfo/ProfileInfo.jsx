@@ -23,7 +23,7 @@ const ProfileInfo = (props) => {
                         <Preloader />
                 )}
                 <div className={classes.profileStatus}>
-                <ProfileStatus status="Hello, my friends" />
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 </div>
 
             </div>
