@@ -1,40 +1,33 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, {useEffect} from "react";
+import {LoginStock} from "../common/FormsControls/FormsControls";
+import {connect} from "react-redux";
+import {login} from "../../redux/auth-reducer";
+import {useNavigate} from "react-router-dom";
 
-const LoginForm = ({ onSubmit }) => {
-    const { register, handleSubmit } = useForm();
-
+const LoginForm = ({login}) => {
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <input placeholder="Login" {...register("login", { required: true })}
-                />
-            </div>
-            <div>
-                <input placeholder="Password" type="password" {...register("password", { required: true })}
-                />
-            </div>
-            <div>
-                <input type="checkbox" {...register("rememberMe")}/> Remember me
-            </div>
-            <div>
-                <button type="submit">Sign in</button>
-            </div>
-        </form>
+        <LoginStock login={login}/>
     );
 };
 
-const Login = () => {
-    const onSubmit = (formData) => {
-        console.log(formData);
-    };
+const Login = (props) => {
+    const navigate = useNavigate();
+
+     useEffect(() => {
+         if (props.isAuthorized) {
+             navigate("/profile");
+         }
+     }, [props.isAuthorized, navigate]);
 
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginForm onSubmit={onSubmit} />
+            <LoginForm login={props.login}/>
         </div>
     );
 };
+const mapStateToProps = (state) => ({
+  isAuthorized: state.auth.isAuthorized,
+})
 
-export default Login;
+export default connect(mapStateToProps, {login})(Login)
