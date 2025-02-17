@@ -23,17 +23,17 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (email, login, rememberMe, isAuthorized) => ({
+export const setAuthUserData = (userId, email, login, rememberMe, isAuthorized) => ({
     type: SET_USER_DATA,
-    payload: {email, login, rememberMe, isAuthorized }
+    payload: {userId, email, login, rememberMe, isAuthorized}
 })
 
 export const getAuthUserData = () => (dispatch) => {
     authAPI.me()
         .then((data) => {
             if (data.resultCode === 0) {
-                let {email, login, rememberMe} = data.data
-                dispatch(setAuthUserData(email, login, rememberMe, true))
+                let {id, email, login, rememberMe} = data.data
+                dispatch(setAuthUserData(id, email, login, rememberMe, true))
             } else {
                 console.error("Failed to fetch posts", data.messages);
             }
@@ -43,12 +43,28 @@ export const getAuthUserData = () => (dispatch) => {
         })
 }
 
-export const login = (email, password, rememberMe) => (dispatch) => {
+export const login = (email, password, rememberMe, setError, setValue) => (dispatch) => {
     authAPI.login(email, password, rememberMe)
         .then((data) => {
             if (data.resultCode === 0) {
                 dispatch(getAuthUserData())
+            } else {
+                setError("server", {
+                    type: "server",
+                    message: data.messages[0] || "Ошибка входа. Проверьте данные."
+                })
+                setValue("email", "");
+                setValue("password", "");
             }
+        })
+        .catch((error) => {
+            console.error('Error login:', error);
+            setError("server", {
+                type: "server",
+                message: "Ошибка сервера, попробуйте позже"
+            })
+            setValue("email", "");
+            setValue("password", "");
         })
 }
 export const logout = () => (dispatch) => {

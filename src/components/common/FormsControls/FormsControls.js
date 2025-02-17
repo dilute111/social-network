@@ -70,18 +70,22 @@ export const AddMessageStock = ({sendMessage}) => {
 export const LoginStock = ({ login }) => {
     const {
         register, handleSubmit, setValue,
+        setError,
         formState: {errors, touchedFields}
     } = useForm();
 
-    const onSubmit = (formData) => {
-        login(formData.email, formData.password, formData.rememberMe);
-    }
-
-    const onError = () => {
-        if(errors.email) {
+    const onSubmit = async (formData) => {
+        try {
+            await login(formData.email, formData.password, formData.rememberMe, setError, setValue);
+        } catch (error) {
+            console.error('Ошибка при входе:', error);
             setValue("email", "")
+            setValue("password", "")
         }
-        if(errors.password) {
+    }
+    const onError = () => {
+        if(errors.email || errors.password || errors.server) {
+            setValue("email", "")
             setValue("password", "")
         }
     }
@@ -97,6 +101,9 @@ export const LoginStock = ({ login }) => {
                 <input type="checkbox" {...register("rememberMe")} /> Remember me
             </div>
             <button type="submit">Sign in</button>
+            <div className={classes.error}>
+                {errors.server && <span>{errors.server.message}</span>}
+            </div>
         </form>
     );
 };
