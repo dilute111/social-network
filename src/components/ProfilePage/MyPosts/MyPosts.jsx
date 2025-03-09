@@ -12,10 +12,12 @@ const MyPostsForm = (props) => {
     )
 }
 
-const MyPosts = (props) => {
+const MyPosts = React.memo((props) => {
 
     const postsData =
-        props.posts.map(e => <Post image={avatar} message={e.message} likes={e.likesCount}/>)
+        [...props.posts]
+            .reverse()
+            .map(e => <Post image={avatar} message={e.message} likes={e.likesCount}/>)
 
     const onAddPost = (text) => {
         props.updateNewPostText(text); // Обновляем текст
@@ -29,6 +31,6 @@ const MyPosts = (props) => {
             <div className={classes.posts}>{postsData}</div>
         </div>
     );
-};
+})
 
 export default MyPosts;
