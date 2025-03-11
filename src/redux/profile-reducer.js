@@ -3,8 +3,8 @@ import {profileAPI, usersAPI} from "../api/api";
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
-const GET_USER_PROFILE = "GET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const DELETE_POST = "DELETE_POST"
 
 let initialState = {
     p: [
@@ -25,7 +25,7 @@ const profileReducer = (state = initialState, action) => {
         case ADD_POST:
             let newPost = {
                 id: state.p.length + 1,
-                message: state.newPostText,
+                message: action.payload,
                 likesCount: 0,
             };
             return {
@@ -33,25 +33,24 @@ const profileReducer = (state = initialState, action) => {
                 p: [...state.p, newPost],
 
             };
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.text
-            }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
         case SET_STATUS: {
             return {...state, status: action.status}
         }
+        case DELETE_POST: {
+            return {...state, p: state.p.filter(p => p.id !== action.postId)}
+        }
         default:
             return state
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
+export const addPostActionCreator = (text) => ({type: ADD_POST, payload: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
+export const deletePost = (postId) => ({type: DELETE_POST, postId})
 
 export const getUserProfile = (userId) => (dispatch) => {
     usersAPI.getProfile(userId)

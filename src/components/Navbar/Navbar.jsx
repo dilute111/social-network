@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Navbar.module.css';
-import {NavLink} from "react-router-dom";
+import { Link } from 'react-router-dom';
+
 import Friends from "./Friends/Friends";
 import store from "../../redux/redux-store";
 
@@ -11,18 +12,18 @@ const Navbar = (props) => {
                                                                       ava={e.ava}/>)
     return (
              <nav className={classes.nav}>
-               <NavLink to="/profile"> <div className={classes.item}>Profile</div></NavLink>
-               <NavLink to="/messages"> <div className={classes.item}>Messages</div> </NavLink>
-               <NavLink to="/users"> <div className={classes.item}>Users</div> </NavLink>
-               <NavLink to="/news"> <div className={classes.item}>News</div> </NavLink>
-               <NavLink to="/music"> <div className={classes.item}>Music</div> </NavLink>
-               <NavLink to="/settings"> <div className={classes.item}>Settings</div> </NavLink>
-               <NavLink to="/friends"> <div className={classes.item}>Friends </div>
+               <Link to="/profile"> <div className={classes.item}>Profile</div></Link>
+               <Link to="/messages"> <div className={classes.item}>Messages</div> </Link>
+               <Link to="/users"> <div className={classes.item}>Users</div> </Link>
+               <Link to="/news"> <div className={classes.item}>News</div> </Link>
+               <Link to="/music"> <div className={classes.item}>Music</div> </Link>
+               <Link to="/settings"> <div className={classes.item}>Settings</div> </Link>
+               <Link to="/friends"> <div className={classes.item}>Friends </div>
                     <div className={classes.friends}>{friendsElement}
                         <span
                             className={classes.rest}>and {(store.getState().messagesPage.d.length - 3)} more</span>
                     </div>
-                </NavLink>
+                </Link>
              </nav>
 
 

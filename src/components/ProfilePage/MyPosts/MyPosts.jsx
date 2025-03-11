@@ -21,7 +21,7 @@ const MyPosts = React.memo((props) => {
 
     const onAddPost = (text) => {
         props.updateNewPostText(text); // Обновляем текст
-        props.addPost(); // Отправляем пост
+        props.addPost(text); // Отправляем пост
     };
 
     return (
