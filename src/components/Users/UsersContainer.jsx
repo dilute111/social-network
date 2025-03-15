@@ -19,30 +19,35 @@ import {
     getFollowingInProgress,
 } from "../../redux/users-selectors";
 
+
+
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.requestUsers(currentPage, pageSize)
     }
 
     onPageChange = (pageNumber) => {
-        this.props.requestUsers(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.requestUsers(pageNumber, pageSize)
 
     }
 
     render() {
-
+        const {isFetching, totalUsersCount, pageSize, currentPage, users,
+            unfollow, follow, toggleFollowingProgress, followingInProgress} = this.props;
         return <>
-            {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
-                   pageSize={this.props.pageSize}
-                   currentPage={this.props.currentPage}
+            {isFetching ? <Preloader/> : null}
+            <Users totalUsersCount={totalUsersCount}
+                   pageSize={pageSize}
+                   currentPage={currentPage}
                    onPageChange={this.onPageChange}
-                   users={this.props.users}
-                   unfollow={this.props.unfollow}
-                   follow={this.props.follow}
-                   toggleFollowingProgress={this.props.toggleFollowingProgress}
-                   followingInProgress={this.props.followingInProgress}
+                   users={users}
+                   unfollow={unfollow}
+                   follow={follow}
+                   toggleFollowingProgress={toggleFollowingProgress}
+                   followingInProgress={followingInProgress}
             />
         </>
     }

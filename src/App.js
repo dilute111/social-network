@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
+import {BrowserRouter, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -11,10 +11,11 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import store from "./redux/redux-store";
 
 export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular.png"
 export const beachImg = "https://avatars.mds.yandex.net/get-altay/927353/2a00000188a175c18d18238c954520c63d15/orig"
@@ -64,6 +65,20 @@ const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
 })
 
-export default compose(
+const AppContainer = compose(
     withRouter,
     connect(mapStateToProps, {initializeApp }))(App)
+
+const MainApp = (props) => {
+    return (
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>
+    )
+}
+
+export default MainApp

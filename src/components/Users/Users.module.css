@@ -1,15 +1,5 @@
-.users {
-    background-color: cornflowerblue;
-}
-
 .users img {
     width: 100px;
     height: 100px;
     margin: 0px;
-}
-
-.selectedPage {
-    background-color: cornflowerblue;
-    color: white;
-    transform: scale(1.2);
 }

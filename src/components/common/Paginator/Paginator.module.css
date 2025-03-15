@@ -1,0 +1,8 @@
+.selectedPage {
+    background-color: cornflowerblue;
+    color: white;
+    transform: scale(1.3);
+}
+.users {
+    background-color: cornflowerblue;
+}

@@ -52,34 +52,31 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
 export const deletePost = (postId) => ({type: DELETE_POST, postId})
 
-export const getUserProfile = (userId) => (dispatch) => {
-    usersAPI.getProfile(userId)
-        .then((data) => {
-            dispatch(setUserProfile(data))
-        })
-        .catch((err) => {
-            console.error("Failed to fetch posts", err);
-        })
+export const getUserProfile = (userId) => async (dispatch) => {
+    const data = await usersAPI.getProfile(userId)
+    try {
+        dispatch(setUserProfile(data))
+    } catch (err) {
+        console.error("Failed to fetch posts", err);
+    }
 }
-export const getStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId)
-        .then((data) => {
-            dispatch(setStatus(data))
-        })
-        .catch((err) => {
-            console.error("Failed to fetch posts", err);
-        })
+export const getStatus = (userId) => async (dispatch) => {
+    const data = await profileAPI.getStatus(userId)
+    try {
+        dispatch(setStatus(data))
+    } catch (err) {
+        console.error("Failed to fetch posts", err);
+    }
 }
-export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status)
-        .then((data) => {
-            if(data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
-        .catch((err) => {
-            console.error("Failed to fetch posts", err);
-        })
+export const updateStatus = (status) => async (dispatch) => {
+    const data = await profileAPI.updateStatus(status)
+    try {
+        if (data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (err) {
+        console.error("Failed to fetch posts", err);
+    }
 }
 
 export const updateNewPostActionCreator = (text) => ({

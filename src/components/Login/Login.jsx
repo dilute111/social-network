@@ -10,19 +10,19 @@ const LoginForm = ({login}) => {
     );
 };
 
-const Login = (props) => {
+const Login = ({isAuthorized, login }) => {
     const navigate = useNavigate();
 
      useEffect(() => {
-         if (props.isAuthorized) {
+         if (isAuthorized) {
              navigate("/profile");
          }
-     }, [props.isAuthorized, navigate]);
+     }, [isAuthorized, navigate]);
 
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginForm login={props.login}/>
+            <LoginForm login={login}/>
         </div>
     );
 };
