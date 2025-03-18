@@ -99,7 +99,7 @@ export const requestUsers = (page, pageSize) => {
 
 const followUnfollowFlow =  async (dispatch, userId, actionCreator, requiestMethod) => {
     dispatch(toggleFollowingProgress(true, userId))
-    const data = await usersAPI.followUnfollowRequest.bind(usersAPI)(userId, requiestMethod)
+    const data = await usersAPI.followUnfollowRequest(userId, requiestMethod)
     try {
         if (data.resultCode == 0) {
             dispatch(actionCreator(userId))

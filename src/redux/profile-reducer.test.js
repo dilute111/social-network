@@ -2,7 +2,7 @@ import profileReducer, {addPostActionCreator, deletePost} from "./profile-reduce
 import {render, screen} from "@testing-library/react";
 
 let state = {
-    p: [
+    posts: [
         {id: 1, message: "Hello, this is my first post", likesCount: 12},
         {id: 2, message: "Hi, how are you?", likesCount: 0},
         {id: 3, message: "Blabla", likesCount: 26},

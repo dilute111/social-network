@@ -5,7 +5,7 @@ export const profileAPI = {
         return fetch(`${baseUrl}profile/${userId}`, {
             credentials: "include",
             headers: {
-                'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
             }
         })
             .then(response => {
@@ -16,7 +16,7 @@ export const profileAPI = {
         return fetch(`${baseUrl}profile/status/${userId}`, {
             credentials: "include",
             headers: {
-                'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
             }
         })
             .then(response => {
@@ -28,10 +28,26 @@ export const profileAPI = {
             method: "PUT",
             credentials: "include",
             headers: {
-                'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ status })
+        })
+            .then(response => {
+                return response.json()
+            })
+    },
+    savePhoto(photoFile) {
+        const formData = new FormData();
+        formData.append("image", photoFile)
+
+        return fetch(`${baseUrl}profile/photo`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
+            },
+            body: formData
         })
             .then(response => {
                 return response.json()
@@ -43,6 +59,9 @@ export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return fetch(`${baseUrl}users?page=${currentPage}&count=${pageSize}`, {
             credentials: "include",
+            headers: {
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`
+            }
         }).then(response => {
             return response.json()
         })
@@ -52,7 +71,7 @@ export const usersAPI = {
             method: method,
             credentials: "include",
             headers: {
-                'API-KEY': `834ca93b-5707-452e-9e3e-5931a37d50a6`,
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
             }
         })
             .then(response => {
