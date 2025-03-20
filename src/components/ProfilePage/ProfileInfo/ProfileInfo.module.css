@@ -15,10 +15,10 @@
 }
 
 .coverImg {
-    width: 100%; /* Занимает всю ширину */
-    height: 225px; /* Высота, подходящая для обложки */
-    object-fit: cover; /* Избегаем искажений изображения */
-    border-radius: 30px; /* Скругление нижних углов для плавности */
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 30px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 
 }
@@ -26,8 +26,81 @@
 .profileStatus {
     width: 100%;
     margin-top: 30px;
+    min-height: 50px;
 }
 
-.userAvatar input {
-    margin-left: 17%;
+.userDescription {
+    min-height: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.userDescription input {
+    position: absolute;
+    margin-left: 10%;
+}
+
+.bio {
+    position: absolute;
+    margin-left: 30%;
+    max-height: 20px; /* начальная высота блока */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.bio.expanded {
+    max-height: 100%; /* достаточная высота, чтобы показать весь контент */
+    min-height: 30%;
+    min-width: 250px;
+    opacity: 1;
+    background-color: lightsteelblue;
+    border-radius: 10px; /* Скругление углов */
+    padding: 10px; /* Отступы внутри */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Тень */
+    transform: scale(1.02); /* Чуть увеличивается при раскрытии */
+    transition: all 0.3s ease-in-out;
+}
+
+.bio::after {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.toggleArrow {
+    font-size: 16px;
+    color: gray;
+    transition: transform 0.3s ease-in-out;
+}
+
+.expanded .toggleArrow {
+    transform: rotate(180deg);
+}
+
+b {
+    display: inline;
+}
+
+.contact {
+    padding-left: 15px;
+}
+
+.editButton {
+    width: 65px; /* Фиксированная ширина */
+    height: 23px; /* Фиксированная высота */
+    margin-left: 65%;
+
+    z-index: 10;
+    white-space: nowrap; /* Запрет переноса текста */
+    overflow: hidden; /* Обрезка длинного текста */
+    text-overflow: ellipsis; /* Добавление "..." если текст не помещается */
+}
+
+.skills {
+    display: block;
+    margin-left: 10px;
+    max-width: 200px
 }
