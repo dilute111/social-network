@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -9,6 +9,7 @@ import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
+import NotFound from "./components/NotFound/NotFound";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfilePageContainer = React.lazy(() => import("./components/ProfilePage/ProfilePageContainer"))
@@ -37,6 +38,8 @@ function App({ initializeApp, initialized }) {
             <div className="app-wrapper-content">
                 <Suspense fallback={<Preloader />}>
                 <Routes>
+
+                    <Route path="/" element={<Navigate to ={"/profile"}/>}/>
                     <Route path="/profile/:userId?" element={<ProfilePageContainer/>}/>
                     <Route path="/messages/*" element={<DialogsContainer/>}/>
                     <Route path="/users" element={<UsersContainer/>}/>
@@ -45,6 +48,8 @@ function App({ initializeApp, initialized }) {
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
                     <Route path="/friends" element={<FriendsPage/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+
                 </Routes>
                 </Suspense>
             </div>

@@ -85,7 +85,7 @@ export const updateStatus = (status) => async (dispatch) => {
             dispatch(setStatus(status))
         }
     } catch (err) {
-        console.error("Failed to fetch posts", err);
+        console.error("Failed to update status", err.message);
     }
 }
 export const savePhoto = (file) => async (dispatch) => {

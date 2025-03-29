@@ -24,7 +24,7 @@ const Paginator = ({totalUsersCount, pageSize, currentPage, onPageChange}) => {
     };
 
     return (
-        <div className={classes.users}>
+        <div className={`${classes.users}`}>
             <button onClick={handlePrev} disabled={pageOffset === 0}>Prev</button>
             {pages.slice(pageOffset, pageOffset + pageBlockSize).map(p => {
                 return <button className={currentPage === p ? classes.selectedPage : ""}
