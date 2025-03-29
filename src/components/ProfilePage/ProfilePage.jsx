@@ -1,7 +1,6 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {savePhoto} from "../../redux/profile-reducer";
 
 
 
@@ -13,6 +12,7 @@ const ProfilePage = (props) => {
                          status={props.status}
                          updateStatus={props.updateStatus}
                          savePhoto={props.savePhoto}
+                         saveProfile={props.saveProfile}
             />
             <MyPostsContainer  />
 

@@ -52,7 +52,28 @@ export const profileAPI = {
             .then(response => {
                 return response.json()
             })
-    }
+    },
+    saveProfile(profileInfo) {
+        return fetch(`${baseUrl}profile`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(profileInfo)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json()
+            })
+            .catch(err => {
+                console.error("Error in saveProfile:", err);
+                throw err; // Пробрасываем ошибку дальше
+            })
+    },
 }
 
 export const usersAPI = {
@@ -96,16 +117,17 @@ export const authAPI = {
                 return response.json()
             })
     },
-    login(email, password, rememberMe = false) {
+    login(email, password, rememberMe = false, captcha = null) {
         return fetch(`${baseUrl}auth/login`, {
             method: "POST",
             credentials: "include",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password, rememberMe})
+            body: JSON.stringify({ email, password, rememberMe, captcha})
         })
             .then((response) => {
+                console.log(response)
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -126,5 +148,27 @@ export const authAPI = {
                 }
                 return response.json()
             })
+    }
+}
+
+export const securityAPI = {
+    getCaptchaUrl (){
+        return fetch(`${baseUrl}security/get-captcha-url`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                'API-KEY': `3f4730fc-bf77-4164-9640-990777c5cdbf`
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error, status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .catch((error) => {
+                console.error("Error fetching captcha URL:", error);
+                throw error; // Пробрасываем ошибку дальше, чтобы её можно было обработать в компоненте
+            });
     }
 }

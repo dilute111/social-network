@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import classes from "./FormsControls.module.css";
 import validatePostText from "../../../utils/validators/validators";
 
-const FormControl = ({Component, name, register, errors, touchedFields, validate, ...rest}) => (
+export const FormControl = ({Component, name, register, errors, touchedFields, validate, ...rest}) => (
     <div className={`${errors[name] ? classes.error : ""}`}>
         <Component {...register(name, {validate})} {...rest} />
         {errors[name] && touchedFields?.[name] && (
@@ -67,27 +67,32 @@ export const AddMessageStock = ({sendMessage}) => {
 };
 
 // Использование в LoginForm
-export const LoginStock = ({ login }) => {
+export const LoginStock = ({ login, captchaUrl }) => {
+    console.log(captchaUrl)
     const {
         register, handleSubmit, setValue,
-        setError,
+        setError, reset,
         formState: {errors, touchedFields}
-    } = useForm();
+    } = useForm({
+        mode: "onChange", // Валидация при изменении для немедленной обратной связи
+    });
+
+    useEffect(() => {
+        if (captchaUrl) {
+            setValue("captcha", ""); // Очищаем поле при смене капчи
+        }
+    }, [captchaUrl, setValue]);
 
     const onSubmit = async (formData) => {
         try {
-            await login(formData.email, formData.password, formData.rememberMe, setError, setValue);
+            console.log(formData)
+            await login(formData.email, formData.password, formData.rememberMe, formData.captcha, setError, setValue);
         } catch (error) {
             console.error('Ошибка при входе:', error);
-            setValue("email", "")
-            setValue("password", "")
         }
     }
     const onError = () => {
-        if(errors.email || errors.password || errors.server) {
-            setValue("email", "")
-            setValue("password", "")
-        }
+        reset({}, { keepValues: true })
     }
 
     return (
@@ -100,6 +105,18 @@ export const LoginStock = ({ login }) => {
             <div>
                 <input type="checkbox" {...register("rememberMe")} /> Remember me
             </div>
+            { captchaUrl  && <img src={captchaUrl} alt=""/>}
+            { captchaUrl  && <FormControl
+                Component="input"
+                name="captcha"
+                register={register}
+                errors={errors}
+                touchedFields={touchedFields}
+                required="Captcha is required"
+                placeholder="Enter captcha"
+                type="text"
+                validate="required"
+            /> }
             <button type="submit">Sign in</button>
             <div className={classes.error}>
                 {errors.server && <span>{errors.server.message}</span>}

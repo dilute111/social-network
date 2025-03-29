@@ -89,14 +89,12 @@ b {
 }
 
 .editButton {
-    width: 65px; /* Фиксированная ширина */
-    height: 23px; /* Фиксированная высота */
+    width: 70px;
+    height: 23px;
     margin-left: 65%;
-
     z-index: 10;
     white-space: nowrap; /* Запрет переноса текста */
-    overflow: hidden; /* Обрезка длинного текста */
-    text-overflow: ellipsis; /* Добавление "..." если текст не помещается */
+
 }
 
 .skills {

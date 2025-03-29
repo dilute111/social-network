@@ -6,6 +6,7 @@ const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
 const DELETE_POST = "DELETE_POST"
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS"
+const SAVE_PROFILE_INFO_SUCCESS = "SAVE_PROFILE_INFO_SUCCESS"
 
 let initialState = {
     posts: [
@@ -46,6 +47,9 @@ const profileReducer = (state = initialState, action) => {
         case SAVE_PHOTO_SUCCESS: {
             return {...state, profile: {...state.profile, photos: action.photos}}
         }
+        case SAVE_PROFILE_INFO_SUCCESS: {
+            return {...state, profile: {...state.profile, ...action.profileInfo}}
+        }
         default:
             return state
     }
@@ -56,6 +60,7 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
 export const deletePost = (postId) => ({type: DELETE_POST, postId})
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
+export const saveProfileSuccess = (profileInfo) => ({type: SAVE_PROFILE_INFO_SUCCESS, profileInfo})
 
 export const getUserProfile = (userId) => async (dispatch) => {
     const data = await usersAPI.getProfile(userId)
@@ -84,13 +89,27 @@ export const updateStatus = (status) => async (dispatch) => {
     }
 }
 export const savePhoto = (file) => async (dispatch) => {
-    const data = await profileAPI.savePhoto(file)
     try {
+        const data = await profileAPI.savePhoto(file)
         if (data.resultCode === 0) {
             dispatch(savePhotoSuccess(data.data.photos))
         }
     } catch (err) {
-        console.error("Failed to fetch posts", err);
+        console.error("Failed to fetch photo", err);
+    }
+}
+export const saveProfile = (profileInfo) => async (dispatch) => {
+    try {
+        const data = await profileAPI.saveProfile(profileInfo)
+        if (data.resultCode === 0) {
+            dispatch(saveProfileSuccess(profileInfo))
+        } else {
+            const errorMessage = data.messages.length > 0 ? data.messages.join(", ") : "Failed to save profile";
+            throw new Error(errorMessage)
+        }
+    } catch (err) {
+        console.error("Failed to fetch profile", err);
+        throw err
     }
 }
 

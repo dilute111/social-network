@@ -1,0 +1,138 @@
+.bio {
+    position: absolute;
+    margin-left: 30%;
+    padding: 10px; /* Отступы как в expanded состоянии панели */
+    background-color: #fff; /* Начальный белый фон */
+    border: 1px solid #e0e0e0; /* Легкая обводка для ненавязчивости */
+    border-radius: 10px; /* Скругленные углы как в панели */
+    transition: all 0.3s ease-in-out; /* Плавные переходы как в панели */
+    opacity: 0.9; /* Чуть выше, чем у свернутой панели, чтобы форма выглядела активной */
+    cursor: default; /* Убираем pointer, так как форма не сворачивается */
+    min-height: 70%; /* Минимальная высота как у expanded панели */
+    min-width: 500px; /* Минимальная ширина как у expanded панели */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Легкая тень, чуть мягче, чем в expanded */
+}
+
+.bio:hover {
+    background-color: lightsteelblue; /* Цвет фона как у expanded панели при ховере */
+    opacity: 1; /* Полная видимость при взаимодействии */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Тень как у expanded */
+    transform: scale(1.01); /* Легкое увеличение как у expanded */
+}
+
+/* Группа полей формы */
+.formGroup {
+    margin-bottom: 15px; /* Отступ между полями */
+    display: block;
+}
+
+.formGroup b {
+    display: inline-block;
+    width: 150px; /* Фиксированная ширина для меток, чтобы выровнять поля */
+    vertical-align: top; /* Выравнивание по верхнему краю для многострочных элементов */
+    margin-top: 10px; /* Отступ между полями */
+}
+
+/* Стили для текстовых полей и textarea */
+.bio input,
+.bio textarea {
+    width: 50%;
+    margin-left: 20%;
+    margin-top: -15px;
+    padding: 8px;
+    border: 1px solid #d1d1d1; /* Легкая серая обводка */
+    border-radius: 5px; /* Чуть меньше скругление, чем у контейнера */
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9; /* Очень светлый фон для полей */
+    transition: border-color 0.3s ease-in-out;
+}
+
+.bio input:focus,
+.bio textarea:focus {
+    border-color: #4682b4; /* Темнее lightsteelblue для акцента */
+    outline: none;
+    box-shadow: 0 0 5px rgba(70, 130, 180, 0.3); /* Легкий голубой glow */
+}
+
+/* Checkbox */
+.bio input[type="checkbox"] {
+    width: auto; /* Убираем фиксированную ширину для чекбокса */
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+/* Стили для skills (textarea) */
+.skills {
+    display: block;
+
+}
+
+.skills textarea {
+    min-height: 50px; /* Достаточная высота для textarea */
+    resize: vertical; /* Разрешаем менять только высоту */
+}
+
+/* Кнопка Save */
+.saveButton {
+    width: 80px; /* Как у editButton */
+    height: 30px; /* Как у editButton */
+    margin-left: 85%; /* Как у editButton */;
+    margin-top: 6%;
+    background-color: #4682b4; /* Темнее lightsteelblue для кнопки */
+    color: #fff;
+    border: none;
+    border-radius: 5px; /* Чуть меньше скругление, чем у контейнера */
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    white-space: nowrap; /* Как у editButton */
+    position: relative;
+
+}
+
+.saveButton:hover {
+    background-color: #4169e1; /* Чуть ярче и темнее для ховера */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Жирный текст */
+b {
+    display: inline; /* Как в оригинальной панели */
+}
+
+/* Стрелка (статичная, так как форма не сворачивается) */
+.bio > span {
+    font-size: 16px;
+    color: gray;
+    margin-left: 5px;
+}
+
+.userName {
+    margin-bottom: -10px;
+}
+
+.contact {
+    margin: 10px;
+    margin-left: 5%;
+}
+
+.header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход для эффекта */
+}
+
+.header:hover {
+    background-color: #e0e0e0; /* Светло-серый фон при наведении */
+}
+
+.error {
+    position: absolute;
+    margin-left: 75%;
+}
+
+.userContacts {
+    margin-top: -30px;
+}

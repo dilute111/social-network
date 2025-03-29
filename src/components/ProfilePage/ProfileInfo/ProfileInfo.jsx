@@ -6,17 +6,15 @@ import userPhoto from "../../../assets/images/user.png"
 import ProfileStatusWithHooks from "../ProfileStatus/ProfileStatusWithHooks";
 import ProfileDataForm from "./ProfileDataForm";
 
-const Contact = ({contactTitle, contactValue}) => {
+export const Contact = ({contactTitle, contactValue}) => {
     return (
         <div className={classes.contact}>
-            <b>{contactTitle}: {contactValue}</b>
+            <b>{contactTitle}:</b> <span>{contactValue}</span>
         </div>
     )
 }
 
-const ProfileData = ({profile, isOwner, activateEditMode}) => {
-    const [expanded, setExpanded] = useState(false);
-
+const ProfileData = ({profile, isOwner, activateEditMode, expanded, setExpanded}) => {
     return (
         <div>
             <div
@@ -53,17 +51,48 @@ const ProfileData = ({profile, isOwner, activateEditMode}) => {
     )
 }
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
     let [editMode, setEditMode] = useState(false);
-
-    const activateEditMode = (e) => {
-        e.stopPropagation();
-        setEditMode(true)
-    };
+    let [expanded, setExpanded] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null)
 
     if (!profile) {
         return <Preloader/>;
     }
+
+    const activateEditMode = (e) => {
+        setEditMode(true)
+        e.stopPropagation();
+    };
+
+    const onSubmit = async (formData, setError) => {
+        try {
+            await saveProfile(formData); // saveProfile возвращает промис из thunk
+            setEditMode(false);
+            setExpanded(true);
+            setErrorMessage(null); // Убираем общее сообщение об ошибке
+        } catch (error) {
+            if (error.errors && setError) {
+                // Структурированные ошибки
+                error.errors.forEach(({ field, message }) => {
+                    setError(field, { type: "server", message });
+                });
+            } else if (error.message && setError) {
+                // Парсим общую ошибку вида "Invalid url format (Contacts -> facebook)"
+                const match = error.message.match(/Invalid url format \(Contacts -> (\w+)\)/);
+                if (match) {
+                    const fieldName = match[1].toLowerCase();
+                    setError(`contacts.${fieldName}`, {
+                        type: "server",
+                        message: "Invalid URL format",
+                    });
+                } else {
+                    // Если ошибка не связана с конкретным полем, можно оставить общее сообщение
+                    setErrorMessage(error.message);
+                }
+            }
+        }
+    };
 
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
@@ -83,8 +112,16 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
                         <img src={profile.photos.large || userPhoto} alt=""/>
                         {isOwner ? <input type="file" onChange={onMainPhotoSelected}/> : ""}
 
-                        {editMode ? <ProfileDataForm profile={profile}/> :
-                            <ProfileData activateEditMode={activateEditMode} profile={profile} isOwner={isOwner}/>}
+                        {editMode ? <ProfileDataForm profile={profile}
+                                                     onSubmit={onSubmit}
+                                                     setExpanded={setExpanded}
+                                                     setEditMode={setEditMode}
+                                                     errorMessage={errorMessage}
+                            /> :
+                            <ProfileData activateEditMode={activateEditMode} profile={profile} isOwner={isOwner}
+                                         expanded={expanded} // Передаём expanded
+                                         setExpanded={setExpanded} // Передаём setExpanded
+                            />}
                     </div>
 
                 ) : (
@@ -97,8 +134,6 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
             </div>
         </>
     )
-
-
 };
 
 export default ProfileInfo
