@@ -21,7 +21,7 @@ import {
 
 
 
-class UsersContainer extends React.Component {
+class UsersContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         const {currentPage, pageSize} = this.props

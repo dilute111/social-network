@@ -2,8 +2,10 @@ import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import classes from "./FormsControls.module.css";
 import validatePostText from "../../../utils/validators/validators";
+import {FC} from "react";
+import {IFormControlProps} from "../../../types/types";
 
-export const FormControl = ({Component, name, register, errors, touchedFields, validate, ...rest}) => (
+export const FormControl: FC<IFormControlProps> = ({Component, name, register, errors, touchedFields, validate, ...rest}) => (
     <div className={`${errors[name] ? classes.error : ""}`}>
         <Component {...register(name, {validate})} {...rest} />
         {errors[name] && touchedFields?.[name] && (
