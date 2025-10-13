@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -42,7 +42,7 @@ function App({ initializeApp, initialized }) {
                     <Route path="/" element={<Navigate to ={"/profile"}/>}/>
                     <Route path="/profile/:userId?" element={<ProfilePageContainer/>}/>
                     <Route path="/messages/*" element={<DialogsContainer/>}/>
-                    <Route path="/users" element={<UsersContainer/>}/>
+                    <Route path="/users" element={<UsersContainer pageTitle="Ангуляй"/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>

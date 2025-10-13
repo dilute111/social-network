@@ -17,7 +17,7 @@ const MyPosts = React.memo((props) => {
     const postsData =
         [...props.posts]
             .reverse()
-            .map(e => <Post image={avatar} message={e.message} likes={e.likesCount}/>)
+            .map((e, index) => <Post key={index} image={avatar} message={e.message} likes={e.likesCount}/>)
 
     const onAddPost = (text) => {
         props.updateNewPostText(text); // Обновляем текст
