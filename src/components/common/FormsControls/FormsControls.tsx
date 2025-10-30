@@ -3,26 +3,34 @@ import {useForm} from "react-hook-form";
 import classes from "./FormsControls.module.css";
 import validatePostText from "../../../utils/validators/validators";
 import {FC} from "react";
-import {IFormControlProps} from "../../../types/types";
+import {
+    IAddMessageStockProps,
+    IFormControlProps,
+    ILoginFormData,
+    ILoginStockProps,
+    IMyPostsStockProps
+} from "../../../types/types";
 
 export const FormControl: FC<IFormControlProps> = ({Component, name, register, errors, touchedFields, validate, ...rest}) => (
     <div className={`${errors[name] ? classes.error : ""}`}>
         <Component {...register(name, {validate})} {...rest} />
         {errors[name] && touchedFields?.[name] && (
-            <span className={classes.errorMessage}>{errors[name].message}</span>
+            <span className={classes.errorMessage}>
+                {String(errors[name]?.message)}
+            </span>
         )}
     </div>
 );
 
 // Использование в MyPostsForm
-export const MyPostsStock = ({onAddPost}) => {
+export const MyPostsStock: FC<IMyPostsStockProps> = ({onAddPost}) => {
     const {
         register, handleSubmit,
         reset, setValue,
         formState: {errors, touchedFields}
-    } = useForm();
+    } = useForm<{newPostText: string}>()
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: {newPostText: string}) => {
         onAddPost(data.newPostText);
         reset();
     };
@@ -41,14 +49,14 @@ export const MyPostsStock = ({onAddPost}) => {
 };
 
 // Использование в AddMessageForm
-export const AddMessageStock = ({sendMessage}) => {
+export const AddMessageStock: FC<IAddMessageStockProps> = ({sendMessage}) => {
     const {
         register, handleSubmit,
         reset, setValue,
         formState: {errors, touchedFields}
-    } = useForm();
+    } = useForm<{newMessage: string}>()
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: {newMessage: string}) => {
         if (data.newMessage.trim()) {
             sendMessage(data.newMessage);
             reset();
@@ -69,13 +77,13 @@ export const AddMessageStock = ({sendMessage}) => {
 };
 
 // Использование в LoginForm
-export const LoginStock = ({ login, captchaUrl }) => {
+export const LoginStock: FC<ILoginStockProps> = ({ login, captchaUrl }) => {
     console.log(captchaUrl)
     const {
         register, handleSubmit, setValue,
         setError, reset,
         formState: {errors, touchedFields}
-    } = useForm({
+    } = useForm<ILoginFormData>({
         mode: "onChange", // Валидация при изменении для немедленной обратной связи
     });
 
@@ -85,7 +93,7 @@ export const LoginStock = ({ login, captchaUrl }) => {
         }
     }, [captchaUrl, setValue]);
 
-    const onSubmit = async (formData) => {
+    const onSubmit = async (formData: ILoginFormData) => {
         try {
             console.log(formData)
             await login(formData.email, formData.password, formData.rememberMe, formData.captcha, setError, setValue);
@@ -117,11 +125,13 @@ export const LoginStock = ({ login, captchaUrl }) => {
                 required="Captcha is required"
                 placeholder="Enter captcha"
                 type="text"
-                validate="required"
+                validate={(value) => value ? true : "Captcha is required"}
             /> }
             <button type="submit">Sign in</button>
             <div className={classes.error}>
-                {errors.server && <span>{errors.server.message}</span>}
+                {errors.server && <span>
+                    {String(errors.server.message)}
+                </span>}
             </div>
         </form>
     );

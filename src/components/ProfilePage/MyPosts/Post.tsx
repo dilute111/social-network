@@ -1,15 +1,17 @@
 import React from 'react';
 import classes from "./Post.module.css";
+import {FC} from "react";
+import {IPostProps} from "../../../types/types";
 
-const Post = (props) => {
+const Post: FC<IPostProps> = ({image, message, likes}) => {
     return (
 
             <div className={classes.item}>
                 <div className={classes.content}>
-                    <img  src={props.image} alt="" />
-                    <span> { props.message } </span>
+                    <img  src={image} alt="" />
+                    <span> { message } </span>
                     <div>
-                    <span> Like { props.likes } </span>
+                    <span> Like { likes } </span>
                     </div>
                 </div>
         </div>

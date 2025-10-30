@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {FC} from 'react';
 import loader from "../../../assets/images/loader.gif";
 
-const Preloader = (props) => {
+const Preloader: FC = () => {
     return (
         <div style={{backgroundColor: "black"}}>
             <img style={{width: "100px", height: "100px"}} src={loader} alt=""/>

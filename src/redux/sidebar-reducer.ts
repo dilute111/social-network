@@ -1,6 +1,8 @@
-let initialState = {}
+import {ISideBarInitialState} from "../types/types";
 
-const sidebarReducer = (state = initialState, action) => {
+let initialState: ISideBarInitialState = {}
+
+const sidebarReducer = (state = initialState, action: any) => {
     return state
 }
 

@@ -14,19 +14,6 @@
     border-radius: 5px
 }
 
-.friends {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-}
-
-.rest {
-    margin-left: auto;
-    font-size: 12px;
-    color: purple;
-}
-
 
 .nav a{
     color: blue;
@@ -42,6 +29,6 @@
 }
 
 .nav div:hover {
-    transform: scale(1.1); /* Увеличение кнопки */
+    transform: scale(1.05); /* Увеличение кнопки */
     background-color: royalblue; /* Изменение цвета при наведении */
 }

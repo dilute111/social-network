@@ -1,10 +1,28 @@
 .friends {
-    padding: 10px;
-    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
 }
 
 .friends img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+.rest {
+    margin-left: auto;
+    font-size: 12px;
+    color: purple;
+}
+
+
+
+
+.friendItem:hover {
+    background-color: #e3f2fd; /* голубой */
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: purple;
 }

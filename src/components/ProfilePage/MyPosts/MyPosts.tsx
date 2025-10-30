@@ -1,25 +1,25 @@
-import React from 'react';
+import React, {FC} from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post";
 import {avatar} from "../../../App";
 import {MyPostsStock} from "../../common/FormsControls/FormsControls";
+import {IMyPostsProps, IMyPostsStockProps} from "../../../types/types";
 
 
-const MyPostsForm = (props) => {
+const MyPostsForm: FC<IMyPostsStockProps> = (props) => {
 
     return (
         <MyPostsStock onAddPost={props.onAddPost} />
     )
 }
 
-const MyPosts = React.memo((props) => {
-
+const MyPosts: FC<IMyPostsProps> = (props) => {
     const postsData =
         [...props.posts]
             .reverse()
             .map((e, index) => <Post key={index} image={avatar} message={e.message} likes={e.likesCount}/>)
 
-    const onAddPost = (text) => {
+    const onAddPost = (text: string) => {
         props.updateNewPostText(text); // Обновляем текст
         props.addPost(text); // Отправляем пост
     };
@@ -31,6 +31,8 @@ const MyPosts = React.memo((props) => {
             <div className={classes.posts}>{postsData}</div>
         </div>
     );
-})
+}
 
-export default MyPosts;
+const MyPostsMemoized = React.memo(MyPosts)
+
+export default MyPostsMemoized;

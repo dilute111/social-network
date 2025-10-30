@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {FC, Suspense, useEffect} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
@@ -8,8 +8,9 @@ import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import store from "./redux/redux-store";
+import store, {RootState} from "./redux/redux-store";
 import NotFound from "./components/NotFound/NotFound";
+import {IAppProps} from "./types/types";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfilePageContainer = React.lazy(() => import("./components/ProfilePage/ProfilePageContainer"))
@@ -23,7 +24,7 @@ export const source = "https://skillforge.com/wp-content/uploads/2020/10/angular
 export const beachImg = "https://avatars.mds.yandex.net/get-altay/927353/2a00000188a175c18d18238c954520c63d15/orig"
 export const avatar = "https://i.pinimg.com/736x/fc/a2/21/fca2210d4ccac0da3119daf20f876a0d.jpg"
 
-function App({ initializeApp, initialized }) {
+const App: FC<IAppProps> = ({ initializeApp, initialized }) => {
     useEffect(() => {
         initializeApp()
     }, [initializeApp])
@@ -42,7 +43,7 @@ function App({ initializeApp, initialized }) {
                     <Route path="/" element={<Navigate to ={"/profile"}/>}/>
                     <Route path="/profile/:userId?" element={<ProfilePageContainer/>}/>
                     <Route path="/messages/*" element={<DialogsContainer/>}/>
-                    <Route path="/users" element={<UsersContainer pageTitle="Ангуляй"/>}/>
+                    <Route path="/users" element={<UsersContainer pageTitle="Список пользователей"/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
@@ -57,13 +58,15 @@ function App({ initializeApp, initialized }) {
 
     );
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
     initialized: state.app.initialized,
 })
 
-const AppContainer = connect(mapStateToProps, {initializeApp })(App)
+export const connector = connect(mapStateToProps, {initializeApp })
 
-const MainApp = (props) => {
+const AppContainer = connector(App)
+
+const MainApp: FC = () => {
     return (
     <React.StrictMode>
         <HashRouter >

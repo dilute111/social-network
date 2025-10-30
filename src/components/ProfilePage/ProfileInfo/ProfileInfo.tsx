@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, MouseEvent, useState} from 'react';
 import {beachImg} from "../../../App";
 import classes from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png"
 import ProfileStatusWithHooks from "../ProfileStatus/ProfileStatusWithHooks";
 import ProfileDataForm from "./ProfileDataForm";
+import {FC} from "react";
+import {
+    IContactProps,
+    IProfile,
+    IProfileDataProps,
+    IProfileFormData,
+    IProfileInfoProps
+} from "../../../types/types";
 
-export const Contact = ({contactTitle, contactValue}) => {
+export const Contact: FC<IContactProps> = ({contactTitle, contactValue}) => {
     return (
         <div className={classes.contact}>
             <b>{contactTitle}:</b> <span>{contactValue}</span>
@@ -14,7 +22,7 @@ export const Contact = ({contactTitle, contactValue}) => {
     )
 }
 
-const ProfileData = ({profile, isOwner, activateEditMode, expanded, setExpanded}) => {
+const ProfileData: FC<IProfileDataProps> = ({profile, isOwner, activateEditMode, expanded, setExpanded}) => {
     return (
         <div>
             <div
@@ -51,26 +59,69 @@ const ProfileData = ({profile, isOwner, activateEditMode, expanded, setExpanded}
     )
 }
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
-    let [editMode, setEditMode] = useState(false);
-    let [expanded, setExpanded] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null)
+const handleServerError = (error: any, setError?: any, setErrorMessage?: (message: string | null) => void) => {
+    if (error.errors && setError) {
+        // Структурированные ошибки из API
+        error.errors.forEach(({ field, message }: { field: string; message: string }) => {
+            setError(field, { type: "server", message });
+        });
+    } else if (error.message && setError) {
+        // Парсим общую ошибку вида "Invalid url format (Contacts -> facebook)"
+        const match = error.message.match(/Invalid url format \(Contacts -> (\w+)\)/);
+        if (match) {
+            const fieldName = match[1].toLowerCase();
+            setError(`contacts.${fieldName}`, {
+                type: "server",
+                message: "Invalid URL format",
+            });
+        } else {
+            // Общая ошибка
+            setErrorMessage?.(error.message);
+        }
+    } else if (typeof error === 'string') {
+        // Просто текст ошибки
+        setErrorMessage?.(error);
+    } else {
+        // Неизвестная ошибка
+        setErrorMessage?.('An error occurred while saving profile');
+    }
+};
+
+const ProfileInfo: FC<IProfileInfoProps> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [expanded, setExpanded] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     if (!profile) {
         return <Preloader/>;
     }
 
-    const activateEditMode = (e) => {
+    const activateEditMode = (e: MouseEvent) => {
         setEditMode(true)
         e.stopPropagation();
     };
 
-    const onSubmit = async (formData, setError) => {
+    const onSubmit = async (formData: IProfileFormData, setError?: any) => {
         try {
-            await saveProfile(formData); // saveProfile возвращает промис из thunk
-            setEditMode(false);
-            setExpanded(true);
-            setErrorMessage(null); // Убираем общее сообщение об ошибке
+            const profileInfo: IProfile = {
+                ...profile,           // берем существующий профиль
+                ...formData,          // добавляем данные из формы
+                userId: profile.userId, // сохраняем обязательные поля
+                photos: profile.photos
+            };
+
+            const result = await saveProfile(profileInfo)
+
+            if (result && result.error) {
+                // Обрабатываем ошибку из результата
+                handleServerError(result.error, setError, setErrorMessage);
+            } else {
+                // Успешное сохранение
+                setEditMode(false);
+                setExpanded(true);
+                setErrorMessage(null);
+            }
+
         } catch (error) {
             if (error.errors && setError) {
                 // Структурированные ошибки
@@ -94,7 +145,7 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
         }
     };
 
-    const onMainPhotoSelected = (e) => {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files.length) {
             const file = e.target.files[0]
             savePhoto(file)

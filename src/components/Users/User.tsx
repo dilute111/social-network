@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from "react-router-dom";
 import classes from "./Users.module.css"
+import {IUserComponent} from "../../types/types";
 
 
-const User = ({user, followingInProgress, unfollow, follow}) => {
+const User: FC<IUserComponent> = ({user, followingInProgress, unfollow, follow}) => {
     return (
         <div>
                 <span>

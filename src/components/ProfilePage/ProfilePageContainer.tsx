@@ -1,13 +1,15 @@
 import React from 'react';
 import ProfilePage from "./ProfilePage";
-import {connect} from "react-redux";
+import {connect, ConnectedProps} from "react-redux";
 import {getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
-import {useNavigate, useParams, useLocation, Navigate} from 'react-router-dom';
+import {useNavigate, useParams, useLocation} from 'react-router-dom';
 import withAuthRedirect from "../../hoc/AuthRedirect";
 import {compose} from "redux";
+import {IProfilePageContainerMapStateProps, IWithRouterProps} from "../../types/types";
+import {RootState} from "../../redux/redux-store";
 
-function withRouter(Component) {
-    return (props) => {
+function withRouter(Component: React.ComponentType<any>) {
+    return (props: any) => {
         const navigate = useNavigate();
         const params = useParams();
         const location = useLocation();
@@ -24,7 +26,8 @@ function withRouter(Component) {
 }
 
 
-class ProfilePageContainer extends React.Component {
+
+class ProfilePageContainer extends React.Component<ProfilePageContainerProps> {
 
     refreshProfile() {
         let userId = this.props.params.userId || this.props.authorizedUserId
@@ -36,7 +39,7 @@ class ProfilePageContainer extends React.Component {
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps: ProfilePageContainerProps, prevState: {}, snapshot?: any) {
         let userId = this.props.params.userId || this.props.authorizedUserId
         if (userId !== (prevProps.params.userId || prevProps.authorizedUserId)) {
             this.refreshProfile()
@@ -58,15 +61,19 @@ class ProfilePageContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: RootState): IProfilePageContainerMapStateProps => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
     isAuthorized: state.auth.isAuthorized,
 })
 
+const connector = connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile})
+
+type ProfilePageContainerProps = IWithRouterProps & ConnectedProps<typeof connector>
+
 export default compose(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
+    connector,
     withRouter,
     withAuthRedirect
 )(ProfilePageContainer)

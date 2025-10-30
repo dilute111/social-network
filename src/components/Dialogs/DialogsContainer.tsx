@@ -3,25 +3,20 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import withAuthRedirect from "../../hoc/AuthRedirect";
 import {compose} from "redux";
+import {RootState} from "../../redux/redux-store";
 
 
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: RootState) => {
     return {
         messagesPage: state.messagesPage,
     }
 }
-let mapDispatchToProps = (dispatch) => {
-    return {
-        sendMessage: (body) => dispatch(messagesActions.sendMessageCreator(body)),
-    }
-}
-
 
 
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, { ...messagesActions }),
     withAuthRedirect
 )(Dialogs)

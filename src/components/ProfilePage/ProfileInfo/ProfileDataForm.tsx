@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import classes from "./ProfileDataForm.module.css";
 import {FormControl} from "../../common/FormsControls/FormsControls";
 import {useForm} from "react-hook-form";
+import {IProfileDataFormProps, IProfileFormData} from "../../../types/types";
 
-const ProfileDataForm = ({profile, onSubmit, setEditMode, errorMessage}) => {
+const ProfileDataForm: FC<IProfileDataFormProps> = ({profile, onSubmit, setEditMode, errorMessage}) => {
     const [expanded, setExpanded] = useState(true);
     const [error, setError] = useState(null);
 
@@ -11,7 +12,7 @@ const ProfileDataForm = ({profile, onSubmit, setEditMode, errorMessage}) => {
         register,
         handleSubmit,
         formState: {errors, touchedFields},
-    } = useForm({
+    } = useForm<IProfileFormData>({
         defaultValues: {
             fullName: profile.fullName,
             lookingForAJob: profile.lookingForAJob,
